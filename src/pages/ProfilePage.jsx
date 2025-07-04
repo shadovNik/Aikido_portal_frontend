@@ -95,6 +95,7 @@ function Profile() {
   return (
     <>
       <h1 className="profile__header">Профиль</h1>
+
       {isModalOpen && (
         <div className="modal__overlay">
           <div className="modal__content">

@@ -1,0 +1,19 @@
+{
+  "userId": 1,
+  "role": "Руководитель",
+  "login": "login",
+  "password": "542709",
+  "photo": "",
+  "phoneNumber": "+79655390067",
+  "fullName": "Смирнов Денис Сергеевич",
+  "birthDate": "20.01.2004",
+  "city": "Екатеринбург",
+  "kye": "1 дан",
+  "attestationDate": "20.01.2004",
+  "annualFee": "",
+  "gender": "Мужской",
+  "schoolClass": "",
+  "parentName": "",
+  "parentPhone": "",
+  "registrationDate": ""
+}
