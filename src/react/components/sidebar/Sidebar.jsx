@@ -1,10 +1,9 @@
 import './Sidebar.css';
-import {useState} from "react";
 import {NavLink} from "react-router-dom";
 
 const menuItems = [
     {label: 'Главная', href: '/'},
-    {label: 'Клубы', href: '/clubs'},
+    {label: 'Клубы', href: '/list-clubs'},
     {label: 'Авторизация', href: '/login'},
 ];
 

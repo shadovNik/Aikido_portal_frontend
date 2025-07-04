@@ -64,11 +64,11 @@
 }
 
 .menu_link.active {
-    color: #fff;
+    color: var(--white);
 }
 
 .menu_link:not(.active):hover {
-    color: #fff;
+    color: var(--white);
 }
 
 .custom-checkbox {
