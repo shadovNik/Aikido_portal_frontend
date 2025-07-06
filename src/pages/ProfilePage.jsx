@@ -59,27 +59,12 @@ function Profile() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') closeModal();
-  };
-
   const handleInputChange = (title, value) => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [title]: value,
     }));
   };
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add('modal-open');
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.body.classList.remove('modal-open');
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isModalOpen]);
 
   useEffect(() => {
     const initialValues = [...editItemsMain, ...editItemsRank].reduce(

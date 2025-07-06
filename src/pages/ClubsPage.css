@@ -41,12 +41,16 @@
 
 .left_block {
   flex: 0 0 265px;
-  background: #FFFFFF;
+  background: white;
   border-radius: 24px;
   padding: 8px;
-  height: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  overflow: auto;
+  max-height: 592px;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
 
 .left_block_ul {
