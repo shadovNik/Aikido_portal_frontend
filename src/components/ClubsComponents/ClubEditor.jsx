@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./ClubEditor.css";
 
-function ClubEditorModal({ closeEditor, clubData, onSaveClick }) {
+function ClubEditorModal({ closeModal, clubData, onSaveClick }) {
   const [formData, setFormData] = useState(clubData);
 
   const handleInputChange = (e) => {
@@ -15,14 +15,14 @@ function ClubEditorModal({ closeEditor, clubData, onSaveClick }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSaveClick({ ...clubData, ...formData });
-    closeEditor();
+    closeModal();
   };
 
   return (
     <>
       <div className="creator__modal">
         <div className="creator__content">
-          <div className="close__button" onClick={closeEditor}>
+          <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
               src="../src/assets/profile/close.svg"

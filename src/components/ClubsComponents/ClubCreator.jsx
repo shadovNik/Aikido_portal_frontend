@@ -1,11 +1,11 @@
 import "./ClubCreator.css";
 
-function ClubCreatorModal({ closeCreator, handleCreateSubmit }) {
+function ClubCreatorModal({ closeModal, handleCreateSubmit }) {
   return (
     <>
       <div className="creator__modal">
         <div className="creator__content">
-          <div className="close__button" onClick={closeCreator}>
+          <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
               src="../src/assets/profile/close.svg"

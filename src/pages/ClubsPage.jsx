@@ -26,14 +26,6 @@ function Clubs() {
           localStorage.setItem("clubs", JSON.stringify(data));
         });
     }
-
-    // fetch("/clubs.json")
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       setClubs(data);
-    //       setSelectedId(data[0]?.id);
-    //       localStorage.setItem('clubs', JSON.stringify(data));
-    //     });
   }, []);
 
   const openCreator = () => setIsCreatorOpen(true);
@@ -99,7 +91,7 @@ function Clubs() {
     <>
       {isCreatorOpen && (
         <ClubCreatorModal
-          closeCreator={closeCreator}
+          closeModal={closeCreator}
           handleCreateSubmit={onCreateButtonClick}
         />
       )}
@@ -111,7 +103,7 @@ function Clubs() {
       )}
       {isEditorOpen && (
         <ClubEditorModal
-          closeEditor={closeEditor}
+          closeModal={closeEditor}
           clubData={clubs.filter((club) => club.id === selectedId)[0]}
           onSaveClick={onSaveButtonClick}
         />
