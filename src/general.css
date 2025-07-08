@@ -23,6 +23,7 @@ html, body, #root {
   --non_active_white: rgba(255, 255, 255, 0.49);
   --gray-text: rgba(125, 133, 146, 1);
   --gray-text2: rgba(145, 146, 158, 1);
+  --gray-border: rgba(216, 224, 240, 1);
 }
 
 h1 {

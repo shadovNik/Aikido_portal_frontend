@@ -1,0 +1,149 @@
+.main_div {
+    width: 100%;
+    display: flex;
+    background: var(--white);
+    border-radius: 24px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.content_div {
+    margin-top: 73px;
+    text-align: center;
+    margin-bottom: 73px;
+}
+
+.content_wrapper {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.content_h3 {
+    font-weight: 700;
+    font-size: 22px;
+    padding-bottom: 33px;
+}
+
+.input_div {
+    width: 403px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 7px;
+    position: relative;
+}
+
+/* Обёртка для input и кнопки show password */
+.input_wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    cursor: auto;
+    border: 1px solid var(--gray-border);
+    border-radius: 14px;
+    height: 48px;
+    padding-left: 18px;
+    padding-right: 44px; /* место для кнопки show */
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 0;
+    transition: border 0.2s;
+}
+
+.input_error {
+    border: 1.5px solid #d32f2f !important;
+}
+
+.input_name {
+    color: var(--gray-text);
+    font-weight: 700;
+    padding-left: 6px;
+}
+
+.input_comment {
+    color: #d32f2f;
+    font-size: 13px;
+    margin-top: 2px;
+    margin-bottom: 12px;
+    margin-left: 6px;
+    line-height: 1.2;
+}
+
+/* Кнопка "показать пароль" */
+.show_password_btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.show_password_btn:hover {
+    opacity: 1;
+}
+.show_password_btn img {
+    width: 22px;
+    height: 22px;
+}
+
+.btn_wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 17px;
+    margin-bottom: 49px;
+}
+
+.btn_password {
+    font-family: "Nunito Sans", sans-serif !important;
+    color: var(--gray-text);
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn_wrapper2 {
+    display: flex;
+    justify-content: center;
+}
+
+.btn_login {
+    font-family: "Nunito Sans", sans-serif !important;
+    display: flex;
+    width: 170px;
+    height: 55px;
+    background-color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    border-radius: 14px;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 16px;
+    flex-direction: row;
+    transition: 0.2s;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn_login:hover {
+    background-color: var(--primary-blue);
+    transition: 0.2s;
+    opacity: 80%;
+}
