@@ -31,7 +31,7 @@ function Techniques() {
     <>
       <div className="container">
         <div className="clubs__container">
-          <h1 className="clubs__title">Клубы</h1>
+          <h1 className="clubs__title">Приемы</h1>
         </div>
         <div className="columns">
           <div className="left_block">

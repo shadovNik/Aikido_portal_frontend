@@ -1,6 +1,4 @@
-import './ClubDelete.css';
-
-function ClubDeleteModal({ closeModal, onDeleteClick, clubName }) {
+function GroupDeleteModal({ closeModal, onDeleteClick }) {
   return (
     <>
       <div className="creator__modal">
@@ -12,8 +10,8 @@ function ClubDeleteModal({ closeModal, onDeleteClick, clubName }) {
               alt="Закрыть"
             />
           </div>
-          <p className="modal__header">Удалить клуб</p>
-          <p className="delete__message">Клуб <span className='delete__message-bold'>{clubName}</span> будет удален навсегда. Вы точно хотите его удалить?</p>
+          <p className="modal__header">Удалить группу</p>
+          <p className="delete__message">Группа будет удалена навсегда. Вы точно хотите ее удалить?</p>
           <button className="delete__button" onClick={onDeleteClick}>Удалить</button>
         </div>
       </div>
@@ -21,4 +19,4 @@ function ClubDeleteModal({ closeModal, onDeleteClick, clubName }) {
   );
 }
 
-export default ClubDeleteModal;
+export default GroupDeleteModal;

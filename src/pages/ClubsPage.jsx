@@ -26,6 +26,11 @@ function Clubs() {
           localStorage.setItem("clubs", JSON.stringify(data));
         });
     }
+    // fetch("http://158.160.168.25:5000/api/club/get/list")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //       console.log(data);
+    //     });
   }, []);
 
   const openCreator = () => setIsCreatorOpen(true);
@@ -99,6 +104,7 @@ function Clubs() {
         <ClubDeleteModal
           closeModal={closeDelete}
           onDeleteClick={() => onDeleteButtonClick(selectedId)}
+          clubName={selectedClub.name}
         />
       )}
       {isEditorOpen && (
