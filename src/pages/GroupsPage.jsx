@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./ClubsPage.css";
-import ClubCreatorModal from "../components/ClubsComponents/ClubCreator";
-import ClubEditorModal from "../components/ClubsComponents/ClubEditor";
 import GroupDeleteModal from "../components/GroupsComponents/GroupDelete";
+import GroupCreatorModal from "../components/GroupsComponents/GroupCreator";
+import GroupEditorModal from "../components/GroupsComponents/GroupEditor";
 
 function Groups() {
   const [groups, setGroups] = useState([]);
@@ -26,54 +26,17 @@ function Groups() {
           localStorage.setItem("groups", JSON.stringify(data));
         });
     }
-    // fetch("http://158.160.168.25:5000/api/club/get/list")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //       console.log(data);
-    //     });
   }, []);
 
-  // const openCreator = () => setIsCreatorOpen(true);
-  // const closeCreator = () => setIsCreatorOpen(false);
+  const openCreator = () => setIsCreatorOpen(true);
+  const closeCreator = () => setIsCreatorOpen(false);
   const openDelete = () => setIsDeleteOpen(true);
   const closeDelete = () => setIsDeleteOpen(false);
-  // const openEditor = () => setIsEditorOpen(true);
-  // const closeEditor = () => setIsEditorOpen(false);
+  const openEditor = () => setIsEditorOpen(true);
+  const closeEditor = () => setIsEditorOpen(false);
 
   if (!groups.length) return <div className="load">Загрузка...</div>;
   const selectedGroup = groups.find((group) => group.id === selectedId);
-
-  // const onCreateButtonClick = async (evt) => {
-  //   evt.preventDefault();
-
-  //   let clubInfo = {};
-
-  //   new FormData(evt.target).forEach((value, key) => {
-  //     clubInfo[key] = value;
-  //   });
-
-  //   const newClub = {
-  //     id: clubs.length + 1,
-  //     name: clubInfo.name,
-  //     city: clubInfo.city,
-  //     address: clubInfo.address,
-  //     groups: [
-  //       {
-  //         trainer: {
-  //           name: "",
-  //           degree: "",
-  //           phone: "",
-  //         },
-  //         groupName: "",
-  //         schedule: {},
-  //       },
-  //     ],
-  //   };
-
-  //   const updatedClubs = [...clubs, newClub];
-  //   localStorage.setItem("clubs", JSON.stringify(updatedClubs));
-  //   window.location.reload();
-  // };
 
   const onDeleteButtonClick = (id) => {
     const updatedGroups = groups.filter((group) => group.id !== id);
@@ -83,40 +46,40 @@ function Groups() {
     closeDelete();
   };
 
-  // const onSaveButtonClick = (updatedClub) => {
-  //   const updatedClubs = clubs.map((club) =>
-  //     club.id === updatedClub.id ? updatedClub : club
-  //   );
-  //   setClubs(updatedClubs);
-  //   localStorage.setItem("clubs", JSON.stringify(updatedClubs));
-  // };
+  const onSaveButtonClick = (updatedGroup) => {
+    const updatedGroups = groups.map((group) =>
+      group.id === updatedGroup.id ? updatedGroup : group
+    );
+    setGroups(updatedGroups);
+    localStorage.setItem("clubs", JSON.stringify(updatedGroups));
+  };
 
   return (
     <>
-      {/* {isCreatorOpen && (
-        <ClubCreatorModal
+      {isCreatorOpen && (
+        <GroupCreatorModal
           closeModal={closeCreator}
-          handleCreateSubmit={onCreateButtonClick}
+          groups={groups}
         />
-      )} */}
+      )}
       {isDeleteOpen && (
         <GroupDeleteModal
           closeModal={closeDelete}
           onDeleteClick={() => onDeleteButtonClick(selectedId)}
         />
       )}
-      {/* {isEditorOpen && (
-        <ClubEditorModal
+      {isEditorOpen && (
+        <GroupEditorModal
           closeModal={closeEditor}
-          clubData={clubs.filter((club) => club.id === selectedId)[0]}
+          groupData={groups.filter((group) => group.id === selectedId)[0]}
           onSaveClick={onSaveButtonClick}
         />
-      )} */}
+      )}
 
       <div className="container">
         <div className="clubs__container">
           <h1 className="clubs__title">Группы</h1>
-          <button className="clubs__button">+ Создать</button>
+          <button className="clubs__button" onClick={openCreator}>+ Создать</button>
         </div>
         <div className="columns">
           <div className="left_block">
@@ -137,7 +100,7 @@ function Groups() {
           </div>
           <div className="mid_block">
             <h4 className="mid_block_name">{selectedGroup.name}</h4>
-            <div className="club__button edit">
+            <div className="club__button edit" onClick={openEditor}>
               <img
                 className="club__button__img"
                 src="../src/assets/clubs/edit.svg"
@@ -166,7 +129,7 @@ function Groups() {
             <h4 className="mid_block_name">Информация</h4>
             <div className="right__block__part">
               <span className="right__block__tag">Тренер</span>
-              <p className="right__block__text">{selectedGroup.coachName}</p>
+              <p className="right__block__text">{selectedGroup.coach}</p>
             </div>
             <div className="right__block__part">
               <span className="right__block__tag">Возрастная группа</span>
@@ -174,11 +137,11 @@ function Groups() {
             </div>
             <div className="right__block__part">
               <span className="right__block__tag">Клуб</span>
-              <p className="right__block__text">{selectedGroup.club.name}</p>
+              <p className="right__block__text">{selectedGroup.club}</p>
             </div>
             <div className="right__block__part">
               <span className="right__block__tag">Расписание</span>
-              {Object.entries(selectedGroup.club.schedule).map(([day, time]) => (
+              {Object.entries(selectedGroup.schedule).map(([day, time]) => (
                 <p className="right__block__text" key={day}>
                   {day}: {time}
                 </p>

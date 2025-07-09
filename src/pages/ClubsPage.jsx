@@ -12,25 +12,18 @@ function Clubs() {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
-    const cachedClubs = localStorage.getItem("clubs");
-    if (cachedClubs) {
-      const data = JSON.parse(cachedClubs);
-      setClubs(data);
-      setSelectedId(data[0]?.id);
-    } else {
-      fetch("/clubs.json")
-        .then((res) => res.json())
-        .then((data) => {
-          setClubs(data);
-          setSelectedId(data[0]?.id);
-          localStorage.setItem("clubs", JSON.stringify(data));
-        });
-    }
-    // fetch("http://158.160.168.25:5000/api/club/get/list")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //       console.log(data);
-    //     });
+    const loadData = async () => {
+      try {
+        const response = await fetch('http://158.160.168.25:5000/api/club/get/details/list');
+        const data = await response.json();
+        setClubs(data);
+        setSelectedId(data[0]?.id);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    loadData();
   }, []);
 
   const openCreator = () => setIsCreatorOpen(true);
@@ -46,42 +39,46 @@ function Clubs() {
   const onCreateButtonClick = async (evt) => {
     evt.preventDefault();
 
-    let clubInfo = {};
+    const clubInfo = {};
 
     new FormData(evt.target).forEach((value, key) => {
-      clubInfo[key] = value;
+      clubInfo[key] = value.trim();
     });
 
-    const newClub = {
-      id: clubs.length + 1,
-      name: clubInfo.name,
-      city: clubInfo.city,
-      address: clubInfo.address,
-      groups: [
-        {
-          trainer: {
-            name: "",
-            degree: "",
-            phone: "",
-          },
-          groupName: "",
-          schedule: {},
-        },
-      ],
-    };
+    console.log(JSON.stringify(clubInfo));
 
-    const updatedClubs = [...clubs, newClub];
-    localStorage.setItem("clubs", JSON.stringify(updatedClubs));
-    window.location.reload();
+    try {
+      const response = await fetch(
+        "http://158.160.168.25:5000/api/club/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(clubInfo),
+        }
+      );
+
+      if (response.ok) {
+        closeCreator();
+      } else {
+        console.error("Ошибка сервера:", response.status, response.statusText);
+      }
+    } catch (err) {
+      console.error("Ошибка запроса:", err);
+    }
   };
 
-  const onDeleteButtonClick = (id) => {
-    console.log(id);
-    const updatedClubs = clubs.filter((club) => club.id !== id);
-    setClubs(updatedClubs);
-    localStorage.setItem("clubs", JSON.stringify(updatedClubs));
-    setSelectedId(updatedClubs[0]?.id || null);
-    closeDelete();
+  const onDeleteButtonClick = async (id) => {
+    try {
+      const response = await fetch(`http://158.160.168.25:5000/api/club/delete/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) closeDelete();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onSaveButtonClick = (updatedClub) => {
@@ -159,14 +156,19 @@ function Clubs() {
               {selectedClub.groups.map((group, index) => (
                 <div key={index} style={{ marginTop: 24 }}>
                   <p className="mid_block_tags">Тренер:</p>
-                  <div>
-                    <p>{group.trainer.name}</p>
-                    <p>{group.trainer.degree}</p>
-                    <p>{group.trainer.phone}</p>
-                  </div>
+                    {group.coach && (
+                      <div>
+                        <p>{group.coach.name}</p>
+                        <p>{group.coach.degree}</p>
+                        <p>{group.coach.phone}</p>
+                      </div>
+                    )}
+                    {!group.coach && (
+                      <p>Отсутсвует</p>
+                    )}
                   <p className="mid_block_tags">Группа:</p>
                   <div>
-                    <span>{group.groupName}</span>
+                    <span>{group.name}</span>
                   </div>
                   <p className="mid_block_tags">Расписание:</p>
                   <div>

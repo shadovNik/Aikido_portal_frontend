@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./ClubEditor.css";
 
 function ClubEditorModal({ closeModal, clubData, onSaveClick }) {
   const [formData, setFormData] = useState(clubData);

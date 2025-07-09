@@ -1,15 +1,13 @@
 import { useState } from "react";
 import "./GroupComponents.css";
 
-function GroupCreatorModal({ closeModal, groups }) {
-  const [ageGroup, setAgeGroup] = useState("");
-  const [coach, setCoach] = useState("");
-  const [club, setClub] = useState("");
+function GroupEditorModal({ closeModal, groupData, onSaveClick }) {
+  console.log(groupData);
+
+  const [formData, setFormData] = useState(groupData);
   const [selectedDays, setSelectedDays] = useState([]);
   const [extraDays, setExtraDays] = useState([]);
   const [minorDays, setMinorDays] = useState([]);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
 
   const handleDayClick = (day) => {
     if (selectedDays.includes(day)) {
@@ -26,45 +24,18 @@ function GroupCreatorModal({ closeModal, groups }) {
     setMinorDays([...minorDays, { id: Date.now() }]);
   };
 
-  const handleSelectChangeAge = (e) => setAgeGroup(e.target.value);
-  const handleSelectChangeCoach = (e) => setCoach(e.target.value);
-  const handleSelectChangeClub = (e) => setClub(e.target.value);
-  const handleStartTimeChange = (e) => setStartTime(e.target.value);
-  const handleEndTimeChange = (e) => setEndTime(e.target.value);
-
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    onSaveClick({ ...groupData, ...formData });
+    closeModal();
+  };
 
-    const formData = new FormData(e.target);
-    const newGroup = {
-      name: formData.get("name")?.trim() || "",
-      ageGroup: formData.get("ageGroup")?.trim() || "",
-      coach: formData.get("coach")?.trim() || "",
-      club: formData.get("club")?.trim() || "",
-      schedule: {},
-      extraDates: [],
-      minorDates: [],
-      groupMembers: [],
-    };
-
-    if (selectedDays.length > 0) {
-      const timeRange = `${startTime}-${endTime}`;
-      selectedDays.forEach((day) => {
-        newGroup.schedule[day] = timeRange;
-      });
-    }
-
-    formData.forEach((value, key) => {
-      if (key.startsWith("extraDate_")) {
-        newGroup.extraDates.push(value);
-      } else if (key.startsWith("minorDate_")) {
-        newGroup.minorDates.push(value);
-      }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
-
-    const updatedGroups = [...groups, newGroup];
-    localStorage.setItem('groups', JSON.stringify(updatedGroups));
-    window.location.reload();
   };
 
   return (
@@ -78,8 +49,8 @@ function GroupCreatorModal({ closeModal, groups }) {
               alt="Закрыть"
             />
           </div>
-          <p className="modal__header">Создать группу</p>
-          <form className="club__creator__form" onSubmit={onSubmit}>
+          <p className="modal__header">Отредактировать группу</p>
+          <form className="club__creator__form" onSubmit={handleSubmit}>
             <div className="creator__part">
               <p className="creator__part-title">Название</p>
               <input
@@ -87,18 +58,20 @@ function GroupCreatorModal({ closeModal, groups }) {
                 name="name"
                 className="creator__part-input"
                 placeholder="Название группы"
+                value={formData.name}
+                onChange={handleInputChange}
               />
             </div>
             <div className="creator__part">
               <p className="creator__part-title">Возрастная группа</p>
               <select
                 className={`creator__part-select ${
-                  ageGroup === "" ? "placeholder" : ""
+                  formData.ageGroup === "" ? "placeholder" : ""
                 }`}
                 id="ageGroup"
                 name="ageGroup"
-                value={ageGroup}
-                onChange={handleSelectChangeAge}
+                value={formData.ageGroup}
+                onChange={handleInputChange}
               >
                 <option disabled value="">
                   Выбрать
@@ -112,12 +85,12 @@ function GroupCreatorModal({ closeModal, groups }) {
               <p className="creator__part-title">Выбрать тренера</p>
               <select
                 className={`creator__part-select ${
-                  coach === "" ? "placeholder" : ""
+                  formData.coach === "" ? "placeholder" : ""
                 }`}
                 id="coach"
                 name="coach"
-                value={coach}
-                onChange={handleSelectChangeCoach}
+                value={formData.coach}
+                onChange={handleInputChange}
               >
                 <option disabled value="">
                   Выбрать
@@ -131,12 +104,12 @@ function GroupCreatorModal({ closeModal, groups }) {
               <p className="creator__part-title">Выбрать клуб</p>
               <select
                 className={`creator__part-select ${
-                  club === "" ? "placeholder" : ""
+                  formData.club === "" ? "placeholder" : ""
                 }`}
                 id="club"
                 name="club"
-                value={club}
-                onChange={handleSelectChangeClub}
+                value={formData.club}
+                onChange={handleInputChange}
               >
                 <option disabled value="">
                   Выбрать
@@ -153,7 +126,7 @@ function GroupCreatorModal({ closeModal, groups }) {
                   <div
                     key={day}
                     className={`day__box ${
-                      selectedDays.includes(day) ? "selected" : ""
+                      formData.schedule && formData.schedule[day] ? "selected" : ""
                     }`}
                     onClick={() => handleDayClick(day)}
                   >
@@ -172,8 +145,8 @@ function GroupCreatorModal({ closeModal, groups }) {
                   name="startTime"
                   min="00:00"
                   max="24:00"
-                  value={startTime}
-                  onChange={handleStartTimeChange}
+                  value={formData.schedule && Object.values(formData.schedule)[0]?.split('-')[0] || ''}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="creator__part time">
@@ -185,8 +158,8 @@ function GroupCreatorModal({ closeModal, groups }) {
                   name="endTime"
                   min="00:00"
                   max="24:00"
-                  value={endTime}
-                  onChange={handleEndTimeChange}
+                  value={formData.schedule && Object.values(formData.schedule)[0]?.split('-')[1] || ''}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -195,15 +168,17 @@ function GroupCreatorModal({ closeModal, groups }) {
                 + Добавить дополнительный день в расписание
               </p>
               <div className="extra__days__container">
-                {extraDays.map((day) => (
-                  <div key={day.id} className="creator__part extra">
+                {formData.extraDates && formData.extraDates.map((day, index) => (
+                  <div key={index} className="creator__part extra">
                     <p className="creator__part-title">Дополнительный день</p>
                     <input
                       type="date"
-                      id={`extraDate_${day.id}`}
-                      name={`extraDate_${day.id}`}
+                      id={`extraDate_${index}`}
+                      name={`extraDate_${index}`}
                       className="creator__part-input extra"
                       placeholder="Выбрать дату"
+                      value={day}
+                      onChange={handleInputChange}
                     />
                   </div>
                 ))}
@@ -214,21 +189,23 @@ function GroupCreatorModal({ closeModal, groups }) {
                 + Исключить день из расписания
               </p>
               <div className="extra__days__container">
-                {minorDays.map((day) => (
-                  <div key={day.id} className="creator__part">
+                {formData.minorDates && formData.minorDates.map((day, index) => (
+                  <div key={index} className="creator__part">
                     <p className="creator__part-title">Исключенный день</p>
                     <input
                       type="date"
-                      id={`minorDate_${day.id}`}
-                      name={`minorDate_${day.id}`}
+                      id={`minorDate_${index}`}
+                      name={`minorDate_${index}`}
                       className="creator__part-input extra"
                       placeholder="Выбрать дату"
+                      value={day}
+                      onChange={handleInputChange}
                     />
                   </div>
                 ))}
               </div>
             </div>
-            <button className="creator__submit">Создать</button>
+            <button className="creator__submit">Сохранить</button>
           </form>
         </div>
       </div>
@@ -236,4 +213,4 @@ function GroupCreatorModal({ closeModal, groups }) {
   );
 }
 
-export default GroupCreatorModal;
+export default GroupEditorModal;
