@@ -1,21 +1,28 @@
 import { useState } from "react";
 import styles from './Login.module.css';
+import {useAuth} from "../../../context/useAuth.js";
 
 const Login = () => {
-    const [login, setLogin] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [errors, setErrors] = useState({ login: '', password: '' });
+    const [errors, setErrors] = useState({});
+    const { login } = useAuth();
 
-    const handleLogin = () => {
-        const newErrors = { login: '', password: '' };
-        if (!login.trim()) newErrors.login = 'Введите логин';
+    const handleLogin = async () => {
+        const newErrors = {};
+        if (!username.trim()) newErrors.username = 'Введите логин';
         if (!password.trim()) newErrors.password = 'Введите пароль';
         setErrors(newErrors);
 
-        if (!newErrors.login && !newErrors.password) {
-            // TODO: авторизация
-            alert("Вход выполнен!");
+        if (!newErrors.username && !newErrors.password) {
+            try {
+                await login(username, password);
+                console.log(`login: ${username}, password: ${password}`);
+                alert('Успех');
+            } catch (e) {
+                setErrors({ password: e.message });
+            }
         }
     };
 
@@ -31,11 +38,11 @@ const Login = () => {
                             <input
                                 type="text"
                                 placeholder="kosse"
-                                className={`${styles.input} ${errors.login ? styles.input_error : ''}`}
-                                value={login}
-                                onChange={e => setLogin(e.target.value)}
+                                className={`${styles.input} ${errors.username ? styles.input_error : ''}`}
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
                             />
-                            {errors.login && <div className={styles.input_comment}>{errors.login}</div>}
+                            {errors.username && <div className={styles.input_comment}>{errors.username}</div>}
                         </div>
                         <div className={styles.input_div}>
                             <span className={styles.input_name}>Пароль</span>
