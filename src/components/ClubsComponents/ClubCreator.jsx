@@ -8,7 +8,7 @@ function ClubCreatorModal({ closeModal, handleCreateSubmit }) {
           <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
-              src="../src/assets/profile/close.svg"
+              src="../src/assets/close.svg"
               alt="Закрыть"
             />
           </div>
@@ -43,12 +43,12 @@ function ClubCreatorModal({ closeModal, handleCreateSubmit }) {
                 />
                 <img
                   className="address"
-                  src="../src/assets/profile/location.svg"
+                  src="../src/assets/location.svg"
                   alt="Местоположение"
                 />
               </div>
             </div>
-            <button className="creator__submit">Создать</button>
+            <button className="button creator__submit">Создать</button>
           </form>
         </div>
       </div>

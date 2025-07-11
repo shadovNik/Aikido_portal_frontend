@@ -24,7 +24,7 @@ function ClubEditorModal({ closeModal, clubData, onSaveClick }) {
           <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
-              src="../src/assets/profile/close.svg"
+              src="../src/assets/close.svg"
               alt="Закрыть"
             />
           </div>
@@ -65,12 +65,12 @@ function ClubEditorModal({ closeModal, clubData, onSaveClick }) {
                 />
                 <img
                   className="address"
-                  src="../src/assets/profile/location.svg"
+                  src="../src/assets/location.svg"
                   alt="Местоположение"
                 />
               </div>
             </div>
-            <button className="creator__submit">Сохранить</button>
+            <button className="button creator__submit">Сохранить</button>
           </form>
         </div>
       </div>

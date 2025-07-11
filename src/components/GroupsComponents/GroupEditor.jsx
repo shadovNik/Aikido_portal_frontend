@@ -45,7 +45,7 @@ function GroupEditorModal({ closeModal, groupData, onSaveClick }) {
           <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
-              src="../src/assets/profile/close.svg"
+              src="../src/assets/close.svg"
               alt="Закрыть"
             />
           </div>
@@ -205,7 +205,7 @@ function GroupEditorModal({ closeModal, groupData, onSaveClick }) {
                 ))}
               </div>
             </div>
-            <button className="creator__submit">Сохранить</button>
+            <button className="button creator__submit">Сохранить</button>
           </form>
         </div>
       </div>

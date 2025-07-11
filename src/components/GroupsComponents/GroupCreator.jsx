@@ -74,7 +74,7 @@ function GroupCreatorModal({ closeModal, groups }) {
           <div className="close__button" onClick={closeModal}>
             <img
               className="close__button__img"
-              src="../src/assets/profile/close.svg"
+              src="../src/assets/close.svg"
               alt="Закрыть"
             />
           </div>
@@ -228,7 +228,7 @@ function GroupCreatorModal({ closeModal, groups }) {
                 ))}
               </div>
             </div>
-            <button className="creator__submit">Создать</button>
+            <button className="button creator__submit">Создать</button>
           </form>
         </div>
       </div>

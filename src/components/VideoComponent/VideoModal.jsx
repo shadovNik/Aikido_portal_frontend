@@ -18,7 +18,7 @@ function VideoModal({ videoLink, closeModal }) {
   return (
     <>
       <div className="video__modal">
-        <button className='close__video__button' onClick={closeModal}>x</button>
+        <button className='button close__video__button' onClick={closeModal}>x</button>
         <div className="video__content">
           <video className="technique__video" controls>
             <source src={videoLink} type="video/mp4" />
